@@ -1,0 +1,98 @@
+# Final project software carpentry
+# author: Zhenqin Wang, Han Zong, Han Zhang
+
+from tkinter import *
+# create window for canvas
+root = Tk()
+root.title("Gobang Game")
+root.geometry('400*400')
+l = label(root,text="show",bg="green",font= ("Arial",12),width = 5,height = 2)
+root.mainloop()
+
+# create canvas
+for num in range(1,17):
+    Canvas.create_line(num*30,30,num*30,480,width=2)
+for num in range(1,17):
+    Canvas.create_line(30,num*30,480,num*30,width=2)
+
+def paint(event):
+    python_green = "#476042"
+    x1,y1 = (event.x-1),(event.y-1)
+    x2,y2 = (event.x+1),(event.y+1)
+    w.create_oval(x1,y1,x2,y2,fill = python_green)
+
+master = Tk()
+master.title("painting using ovals")
+w = canvas(master,width = canvas_width,height = canvas_height)
+w.pack(expand = YES, fill = BOTH)
+w.bind("<Button-1>",paint)
+
+message = Label(master,text = "press and drag the mouse to draw ")
+message.pack(side= BOTTOM)
+
+
+# judge whether you win or lose
+def isgameover(xx , yy):
+    count =0
+    for i in range (xx+1 ,17 ): # check to left direction
+        if array[i][yy] == array[xx][yy] :
+            count += 1
+        else:
+            break
+    for i in range ( xx ,0,-1 ) : # check to right direction
+        if array[i][yy] == array[xx][yy]:
+            count += 1
+        else:
+            break
+        if count == 5 :
+            tkinter.messagebox.showinfo("","Game over")
+            count =0
+
+    for i in range (yy+1 ,17 ):  # check down
+        if array[xx][i] == array[xx][yy] :
+            count+=1
+        else:
+            break
+
+    for i in range ( yy ,0,-1 ) : # check up
+        if array[xx][i] == array[xx][yy]:
+            count += 1
+        else:
+            break
+        if count == 5 :
+            tkinter.messagebox.showinfo("","Game over")
+            count =0
+
+        for i,j in zip( range(xx+1,17),range (yy+1,17)): # check rignt down
+            if array[i][j] == array[xx][yy] :
+                 count+=1
+            else:
+                 break
+
+        for i,j in zip(range(xx,0,-1),range ( yy ,0,-1 ) ): # check left up
+            if array[i][j] == array[xx][yy]:
+                count += 1
+            else :
+                break
+            if count == 5 :
+                tkinter.messagebox.showinfo("","Game over")
+                count =0
+
+        for i, j in zip(range(xx -1, 0,-1), range(yy + 1, 17)): # check left down
+            if array[i][j] == array[xx][yy]:
+                count += 1
+            else:
+                break
+            if count == 5 :
+                tkinter.messagebox.showinfo("","Game over")
+                count =0
+
+
+        for i, j in zip(range(xx, 17), range(yy, 0, -1)): # check rignt up
+            if array[i][j] == array[xx][yy]:
+                count += 1
+            else:
+                break
+            if count == 5:
+                tkinter.messagebox.showinfo("","Game over")
+                count = 0
